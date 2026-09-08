@@ -39,3 +39,17 @@ Our goal is to replace mlx_lm.generate() with our own implementations
     V = What information should the token give if you pay attention to this token
 
     Q changes for every new token, and the decoding step does not need the old Q, no need to cache
+
+
+9/8/2027: 
+Currently our engine is consistently picking the logit with the highest likelihood. 
+However this approach leads to problems -> text degeneration
+From our test with max_token = 3000, we see that output starts repeating
+
+SEE WHY: https://arxiv.org/pdf/1904.09751
+
+HOW TO FIX: implement sampler.py
+
+TODO: sampler.py and streaming detokenizer
+
+    
