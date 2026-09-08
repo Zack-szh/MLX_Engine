@@ -93,12 +93,17 @@ class KVCache:
         new_k = mx.zeros((B, n_kv_heads, capacity, k_head_dim), keys.dtype)
         new_v = mx.zeros((B, n_kv_heads, capacity, v_head_dim), values.dtype)
 
+        # copy the old data into new buffer
+        if self.keys is not None and self.values is not None: 
+            new_k[..., : self.offset, :] = self.keys[..., : self.offset, :]
+            new_v[..., : self.offset, :] = self.values[..., : self.offset, :]
+
         # un-reference the old buffers, MLX frees them 
         self.keys = new_k 
         self.values = new_v
         # NOTE: By this point self.keys and values are guaranteed to be of type mx.array
 
-    def make_mask(self, n_queries, return_array=False, windows_size=None):
+    def make_mask(self, n_queries, return_array=False, window_size=None):
         """ 
         Creates the attention mask, three cases: 
         1. n_queries = 1 (DECODE)
