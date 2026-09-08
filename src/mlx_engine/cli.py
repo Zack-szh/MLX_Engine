@@ -4,7 +4,7 @@ import argparse
 from .engine import Engine
 
 def main(): 
-    parser = argparse.ArgumentParser(description="mlx-infra")
+    parser = argparse.ArgumentParser(description="mlx-engine")
     parser.add_argument(
         "--model",
         default="models/Qwen2.5-0.5B-Instruct-4bit",
