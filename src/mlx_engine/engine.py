@@ -154,6 +154,10 @@ class Engine:
         logits = self._forward(mx.array(prompt_ids), cache)
 
         # after getting logits, we find the single highest-scoring token
+        # we are choosing the logit with highest probability - GREEDY DECODING
+        # However, always choosing the logit with highest probability does not give global optimal sequence
+        # we will implement different decoding strategies here for testing! 
+
         token = mx.argmax(logits, axis=-1)
 
         # IMPORTANT!!! 
